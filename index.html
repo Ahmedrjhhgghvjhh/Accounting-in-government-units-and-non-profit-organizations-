@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>اختبار تفاعلي: المحاسبة الحكومية | صح وخطأ + </title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Tahoma', 'Roboto', 'Cairo', sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            color: #1e2a3e;
+        }
+        .quiz-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
+            overflow: hidden;
+            padding: 20px 25px 40px;
+        }
+        h1 {
+            font-size: 1.9rem;
+            text-align: center;
+            color: #0b3b5f;
+            border-bottom: 3px solid #2c7da0;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 15px;
+            padding-bottom: 8px;
+        }
+        .title-wrap {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .sub {
+            text-align: center;
+            color: #2c3e66;
+            font-weight: 500;
+            margin-top: -5px;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            background: #e9f0f5;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 40px;
+        }
+        .section-card {
+            background: #f9fbfe;
+            border-radius: 28px;
+            margin-bottom: 35px;
+            padding: 12px 20px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #e2edf2;
+        }
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #155f7c;
+            border-right: 6px solid #2c7da0;
+            padding-right: 18px;
+            margin: 10px 0 20px 0;
+        }
+        .question-item {
+            background: white;
+            border-radius: 20px;
+            padding: 18px 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid #dee6ed;
+            transition: all 0.1s ease;
+        }
+        .question-text {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 14px;
+            color: #0a2f44;
+            line-height: 1.5;
+        }
+        .truefalse-options {
+            display: flex;
+            gap: 30px;
+            margin: 12px 0 5px;
+            flex-wrap: wrap;
+        }
+        .truefalse-options label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 6px 18px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.1s;
+            font-weight: 500;
+        }
+        .truefalse-options input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #1f7b8c;
+        }
+        .mc-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 15px 0 8px;
+        }
+        .mc-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 1px solid #e2e8f0;
+        }
+        .mc-option input {
+            margin-top: 3px;
+            accent-color: #2c7da0;
+        }
+        .mc-option label {
+            font-weight: normal;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            flex: 1;
+            cursor: pointer;
+        }
+        .feedback {
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            display: none;
+            background: #f0f4fa;
+            border-right: 4px solid;
+        }
+        .feedback.correct {
+            background: #e0f2e9;
+            border-right-color: #2b7e3a;
+            color: #145c2e;
+            display: block;
+        }
+        .feedback.wrong {
+            background: #ffe6e5;
+            border-right-color: #bc3f33;
+            color: #9b2c1f;
+            display: block;
+        }
+        button {
+            background: #1e5f74;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 12px 26px;
+            font-size: 1rem;
+            border-radius: 44px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            margin: 5px 8px;
+            border: none;
+        }
+        button:hover {
+            background: #0f4a5e;
+            transform: scale(0.97);
+        }
+        .action-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 30px 0 20px;
+        }
+        .score-board {
+            background: #eef2fc;
+            border-radius: 44px;
+            padding: 12px 24px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .score-text {
+            background: #1e4663;
+            color: white;
+            padding: 5px 18px;
+            border-radius: 40px;
+        }
+        hr {
+            margin: 20px 0;
+            border-color: #cbdde9;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #6c7e8f;
+            margin-top: 30px;
+        }
+        @media (max-width: 700px) {
+            .quiz-container {
+                padding: 15px;
+            }
+            .question-item {
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="quiz-container">
+    <div class="title-wrap">
+        <h1>📘 اختبار المحاسبة الحكومية</h1>
+        <div class="sub">✔️ صح وخطأ</div>
+    </div>
+
+    <div id="quizRoot"></div>
+
+    <div class="action-bar">
+        <button id="checkAllBtn">✅ تصحيح جميع الإجابات</button>
+        <button id="resetAllBtn">🔄 إعادة تعيين الكل</button>
+    </div>
+    <div id="scorePanel" class="score-board">
+        <span>📊 الإجابات الصحيحة:</span>
+        <span id="scoreValue" class="score-text">0 / 0</span>
+    </div>
+    <footer>أسئلة مستندة إلى نصوص قانون المحاسبة الحكومية والأمثلة التطبيقية. اختر إجابتك ثم اضغط تصحيح.</footer>
+</div>
+
+<script>
+    // ============================================================
+    // الجزء الأول: أسئلة صح وخطأ (True/False)
+    // ============================================================
+// ============================================================
+// 100 سؤال صح وخطأ - المحاسبة الحكومية
+// ============================================================
+const tfQuestions = [
+    { text: "تحدد المادة الأولى من قانون المحاسبة الحكومية نطاق تطبيقه في وحدات الجهاز الإداري للدولة، ووحدات الحكم المحلي، والهيئات العامة الخدمية، والأجهزة الأخرى التي تشملها الموازنة العامة.", correct: "صح" },
+    { text: "لا تسري أحكام قانون المحاسبة الحكومية بأي حال من الأحوال على الجهات التي تتضمن قوانينها أو القرارات الصادرة بشأنها قواعد خاصة.", correct: "خطأ" },
+    { text: "يُطلق على الوحدات والهيئات والأجهزة التي تسري عليها أحكام قانون المحاسبة الحكومية مصطلح 'الجهات الإدارية'.", correct: "صح" },
+    { text: "وفقاً للوائح التنفيذية، فإن الصناديق والحسابات الخاصة لا تندرج ضمن الجهات الإدارية الخاضعة لأحكام قانون المحاسبة الحكومية.", correct: "خطأ" },
+    { text: "تشمل وحدات الحكم المحلي الخاضعة للائحة التنفيذية كلاً من المحافظات، والمراكز والمدن والأحياء، والقرى، ومديريات الخدمات التي تشملها موازنتها.", correct: "صح" },
+    { text: "الرقابة المالية قبل الصرف ونظم الضبط الداخلي تقتصر فقط على الإيرادات الحكومية ولا تشمل الأصول أو الحقوق.", correct: "خطأ" },
+    { text: "الهدف الأساسي للمحاسبة في الوحدات الحكومية ينحصر في الرقابة على العمليات المالية نظراً لكون الوحدة الحكومية 'وحدة ذات مال مخصص'.", correct: "صح" },
+    { text: "توجد منافسة شديدة بين الوحدات الحكومية والوحدات الأخرى في المجتمع خاصة في تقديم الخدمات السيادية كالدفاع والأمن.", correct: "خطأ" },
+    { text: "تقدم الدولة بعض الخدمات بمقابل يقل كثيراً عن تكلفة تقديمها الفعلية مثل خدمات الصحة والتعليم.", correct: "صح" },
+    { text: "الغاية الأساسية للوحدات الحكومية هي تحقيق الربح المالي وتوطيد الاستمرارية التجارية.", correct: "خطأ" },
+    { text: "لا توجد علاقة مباشرة بين مصروفات الوحدة الحكومية وإيراداتها؛ لأنها تستند إلى فكرة المال المخصص لغرض معين.", correct: "صح" },
+    { text: "تتفق أهداف أصحاب المصالح (الإدارة، العاملين، الملاك) في القطاع الخاص على تعظيم الأرباح، بينما تكون هذه الأهداف متعارضة في الوحدات الحكومية.", correct: "خطأ" },
+    { text: "تتميز ملكية الوحدات الحكومية بأنها ملكية خاصة لأفراد المجتمع وليست ملكية عامة للدولة.", correct: "خطأ" },
+    { text: "تسري أحكام قانون المحاسبة الحكومية فقط على وحدات الجهاز الإداري للدولة.", correct: "خطأ" },
+    { text: "وحدات الحكم المحلي تشمل المحافظات والمراكز والمدن والأحياء والقرى ومديريات الخدمات.", correct: "صح" },
+    { text: "الصناديق والحسابات الخاصة لا تسري عليها أحكام قانون المحاسبة الحكومية.", correct: "خطأ" },
+    { text: "الرقابة المالية قبل الصرف ونظم الضبط الداخلي هي أحد أهداف المحاسبة في الوحدات الحكومية.", correct: "صح" },
+    { text: "من أهداف المحاسبة الحكومية إخفاء نتائج تنفيذ الموازنة العامة للدولة عن الأجهزة الرقابية.", correct: "خطأ" },
+    { text: "المحاسبة في الوحدات الحكومية تهدف بصفة أساسية إلى الرقابة على العمليات المالية نظرا لكونها وحدة ذات مال مخصص.", correct: "صح" },
+    { text: "تتميز الوحدات الحكومية بوجود منافسة قوية بينها وبين الوحدات الأخرى في المجتمع.", correct: "خطأ" },
+    { text: "الوحدات الحكومية لا تهدف إلى تحقيق ربح، بل تهدف إلى تقديم خدمات للأفراد.", correct: "صح" },
+    { text: "في الوحدات الحكومية، توجد علاقة طردية مباشرة بين المصروفات والإيرادات.", correct: "خطأ" },
+    { text: "أهداف أصحاب المصالح في الوحدات الحكومية تتفق فيما بينها كما هو الحال في القطاع الخاص.", correct: "خطأ" },
+    { text: "قسم الخدمات التي تقدمها الوحدات الحكومية إلى ستة أنواع رئيسية تشمل الخدمات السيادية، وخدمات البنية الأساسية، والأنشطة الاقتصادية.", correct: "صح" },
+    { text: "تندرج خدمات الضمان الاجتماعي والمنافع العامة ضمن تصنيفات الخدمات التي تقدمها الوحدات الحكومية لأفراد المجتمع.", correct: "صح" },
+    { text: "يرتبط مفهوم 'الملكية المشتركة' بشكل وثيق بشركات الأموال حيث يتعدد المساهمون وتنفصل الإدارة عن الملاك.", correct: "خطأ" },
+    { text: "يظهر مفهوم الشخصية الاعتبارية بوضوح في المشروعات الفردية وشركات الأشخاص حيث ترتبط شخصية الملاك بشخصية المنشأة.", correct: "خطأ" },
+    { text: "يُعد مفهوم 'الأموال المخصصة' المفهوم الأكثر تعبيراً عن طبيعة الوحدة المحاسبية الحكومية بشكل خاص.", correct: "صح" },
+    { text: "وفقاً لمفهوم الأموال المخصصة، تُعتبر الوحدة الحكومية بمثابة مجموعة من الموارد التي تخصص لتأدية نشاط معين.", correct: "صح" },
+    { text: "بموجب أساس الاستحقاق الكامل، يتم الاعتراف بالإيرادات والمصروفات عند تحصيلها أو إنفاقها فعلياً دون الأخذ في الاعتبار الفترة التي تتعلق بها.", correct: "خطأ" },
+    { text: "يعتمد 'الأساس النقدي' على الاعتراف بالإيرادات والمصروفات في الفترة المستحقة عنها بصرف النظر عن تاريخ التحصيل أو الدفع.", correct: "خطأ" },
+    { text: "الأساس المطبق في الوحدات الحكومية في مصر وفقاً للقانون رقم 127 لسنة 1981 هو الأساس المختلط أو الأساس النقدي المعدل.", correct: "صح" },
+    { text: "ملكية الوحدات الحكومية هي ملكية عامة للمجتمع أو الدولة.", correct: "صح" },
+    { text: "خدمات البنية الأساسية مثل الطرق والجسور ليست من الخدمات التي تقدمها الوحدات الحكومية.", correct: "خطأ" },
+    { text: "مفهوم 'الأموال المخصصة' هو المفهوم الأكثر تعبيرا عن الوحدة المحاسبية الحكومية.", correct: "صح" },
+    { text: "الأساس النقدي يعترف بالإيرادات والمصروفات عند استحقاقها بغض النظر عن تاريخ التحصيل أو الدفع.", correct: "خطأ" },
+    { text: "الأساس المختلط (النقدي المعدل) هو الأساس المطبق في الوحدات الحكومية في مصر.", correct: "صح" },
+    { text: "المجالس التشريعية ليست من مستخدمي المعلومات المحاسبية الحكومية.", correct: "خطأ" },
+    { text: "وزارة المالية هي الجهة الوحيدة التي تستخدم المعلومات المحاسبية الحكومية.", correct: "خطأ" },
+    { text: "الموازنة العامة للدولة وفقًا للقانون هي 'البرنامج المالي للخطة عن سنة مالية مقبلة'.", correct: "صح" },
+    { text: "من أهداف الموازنة العامة: التخطيط والرقابة واتخاذ القرارات.", correct: "صح" },
+    { text: "مبدأ 'عمومية الموازنة' يعني أن الموازنة تعد لكل سنة بمفردها.", correct: "خطأ" },
+    { text: "ينحصر مستخدمو المعلومات المحاسبية الحكومية في وزارة المالية فقط، ولا يحق للمجالس التشريعية الاطلاع عليها.", correct: "خطأ" },
+    { text: "تشمل قائمة مستخدمي المعلومات المحاسبية الحكومية كلاً من أجهزة السلطة التنفيذية العليا، والمجالس التشريعية، والأجهزة الرقابية.", correct: "صح" },
+    { text: "عرف القانون رقم 53 لسنة 1973 الموازنة العامة للدولة بأنها البرنامج المالي للخطة عن سنة مالية مقبلة لتحقيق أهداف محددة.", correct: "صح" },
+    { text: "تقتصر أهداف الموازنة العامة للدولة كبرنامج مالي على وظيفتي التخطيط والرقابة دون أن يكون لها دور في اتخاذ القرارات.", correct: "خطأ" },
+    { text: "تهدف الموازنة في شق الرقابة إلى تحديد ما إذا كانت هناك انحرافات عما هو مخطط له ومعرفة أسباب هذه الانحرافات.", correct: "صح" },
+    { text: "من المبادئ الأساسية التي تُعد بناءً عليها الموازنة العامة للدولة السنوية، وعمومية الموازنة، ووحدة الموازنة والتوازن، والإفصاح.", correct: "صح" },
+    { text: "التبويب الاقتصادي للموازنة العامة للدولة يقسم الاستخدامات وفقاً لطبيعتها الاقتصادية على أساس الغرض من الإنفاق والمدى الزمني.", correct: "خطأ" },
+    { text: "الاستخدامات الجارية هي الاستخدامات التى تؤدي إلى زيادة الأصول الثابتة والتكوينات الرأسمالية وتعنى بالخص الاستثمارية.", correct: "خطأ" },
+    { text: "الاستخدامات الرأسمالية هى نفقات دورية ومتكررة يتم إنفاقها خلال مدة الموازنة بالكامل وتستفيد منها الفترة الحالية فقط.", correct: "خطأ" },
+    { text: "يقصد بالتبويب الوظيفي تصنيف الاستخدامات وفقاً للوظائف التي تمارسها الحكومة مثل وظائف الدفاع والأمن والصحة والتعليم.", correct: "صح" },
+    { text: "في تبويب الموازنة حسب البرامج، يتم تقسيم وظائف الحكومة إلى عدد من الأنشطة وربط كل نشاط ببرنامج عمل محدد تخصص له نفقات محددة.", correct: "صح" },
+    { text: "يعتمد التبويب الإداري (التنظيمي) على تصنيف الاستخدامات على أساس الوحدات التي تقوم بالتنفيذ صعوداً وهبوطاً وفقاً للهيكل التنظيمي.", correct: "صح" },
+    { text: "التبويب النوعي للموازنة يقصد به تبويب الاستخدامات حسب نوع النفقة ذاتها مثل الأجور، وشراء السلع والخدمات، والدعم، وسداد القروض.", correct: "صح" },
+    { text: "التبويب الاقتصادي للموازنة يقسم الاستخدامات إلى جارية ورأسمالية حسب طبيعتها الاقتصادية.", correct: "خطأ" },
+    { text: "الاستخدامات الرأسمالية هي إنفاق دوري ومتكرر يتم بالكامل خلال مدة الموازنة.", correct: "خطأ" },
+    { text: "التبويب الوظيفي يصنف الاستخدامات حسب الوظائف التي تمارسها الحكومة مثل الدفاع والصحة.", correct: "صح" },
+    { text: "التبويب حسب البرامج يعتمد على الأنشطة التي تسعى الوحدة الحكومية لتنفيذها خلال فترة الموازنة.", correct: "صح" },
+    { text: "التبويب الإداري يرتبط بالهيكل التنظيمي للوحدات الحكومية ويبدأ من المستوى الأعلى إلى الأقل.", correct: "صح" },
+    { text: "التبويب النوعي للموازنة يعتمد على نوع النفقة نفسها مثل الأجور وشراء السلع والدعم.", correct: "صح" },
+    { text: "أسلوب موازنة الاعتمادات (البنود) يعتمد على تصنيف وظيفي للمصروفات.", correct: "خطأ" },
+    { text: "أسلوب موازنة الاعتمادات هو الأسلوب المطبق حاليًا في مصر.", correct: "صح" },
+    { text: "من مميزات أسلوب موازنة الاعتمادات: صعوبة التطبيق وضعف الرقابة على عناصر المصروفات.", correct: "خطأ" },
+    { text: "من عيوب أسلوب موازنة الاعتمادات: ربط الرقابة بما تم إنجازه وليس بالرقابة المالية فقط.", correct: "خطأ" },
+    { text: "أسلوب موازنة الاعتمادات أو البنود هو الأسلوب المطبق حالياً عند إعداد الموازنة العامة للدولة في مصر.", correct: "صح" },
+    { text: "يقوم أسلوب موازنة البنود على تصنيف النفقة تبعاً للغرض منها وليس تبعا لنوعيتها.", correct: "خطأ" },
+    { text: "يعتمد أسلوب موازنة البرامج والأداء على ثلاثة عناصر منها قياس الأداء المستنتج من التكلفة المعتمدة للبرامج وإتباع الإدارة العلمية.", correct: "صح" },
+    { text: "من مميزات موازنة الاعتمادات والبنود التقليدية سهولة التطبيق، وسهولة الرقابة على عناصر المصروفات وربط الأداء بما تم إنفاته.", correct: "خطأ" },
+    { text: "يعاب على موازنة البنود ظاهرة اندفاع المديرين لإنفاق أكبر قدر من المبالغ المعتمدة وخاصة في آخر السنة المالية خوفاً من تخفيضها مستقبلاً.", correct: "صح" },
+    { text: "من السهل جداً توفير معايير أداء موحدة في ظل موازنة البرامج والأداء للوحدات الخدمية لأن الأعمال فيها إنتاجية وليست مكتبية.", correct: "خطأ" },
+    { text: "يتطلب تطبيق أسلوب موازنة البرامج والأداء تعديل الهيكل الإداري للجهاز الحكومي وتصميم دليل حسابات موحد عبر نظام محاسبي إلكتروني كامل.", correct: "صح" },
+    { text: "يُعرف أسلوب موازنة التخطيط والبرمجة بأنه نظام شامل يتضمن التعرف على الأهداف وإعداد البرامج ثم اختيار أفضلها بناءً على تحليل التكلفة والعائد.", correct: "صح" },
+    { text: "من مزايا موازنة التخطيط والبرمجة التركيز الشديد على المدخلات (الموارد المالية والبشرية) بدلاً من التركيز على المخرجات والخدمات.", correct: "خطأ" },
+    { text: "يعاب على موازنة التخطيط والبرمجة تركيزها فقط على البرامج الجديدة التي تنفذ لأول مرة وإغفالها تقييم الأنشطة التي ما زالت في مراحل التنفيذ.", correct: "صح" },
+    { text: "أسلوب موازنة البرامج والأداء يعتمد على ثلاثة عناصر: تصنيف البرامج، قياس الأداء، والإدارة العلمية.", correct: "صح" },
+    { text: "من مميزات أسلوب موازنة البرامج والأداء: صعوبة تحديد احتياجات الوحدات الحكومية.", correct: "خطأ" },
+    { text: "من عيوب أسلوب موازنة البرامج والأداء: سهولة توفير معايير أداء موحدة لجميع الوحدات الحكومية.", correct: "خطأ" },
+    { text: "أسلوب موازنة التخطيط والبرمجة (PPBS) يعتمد على تحليل التكلفة والعائد لكل برنامج.", correct: "صح" },
+    { text: "من مميزات أسلوب التخطيط والبرمجة: انخفاض تكاليف التطبيق خاصة في الوحدات الصغيرة.", correct: "خطأ" },
+    { text: "أسلوب موازنة التخطيط والبرمجة يركز فقط على البرامج الجديدة التي تنفذ لأول مرة.", correct: "خطأ" },
+    { text: "أسلوب الموازنة الصفرية يقوم على إعادة النظر في جميع البرامج من نقطة الصفر كل سنة.", correct: "صح" },
+    { text: "من مميزات أسلوب الموازنة الصفرية تحسين فاعلية البرامج بشكل كبير.", correct: "صح" },
+    { text: "من عيوب أسلوب الموازنة الصفرية توافر البيانات والمعلومات اللازمة لإجراء التحليل بسهولة.", correct: "خطأ" },
+    { text: "أسلوب الموازنة الصفرية يساعد على إعداد الموازنة في ظل محدودية الموارد المتوفرة.", correct: "صح" },
+    { text: "يقوم أسلوب موازنة الأساس الصفرى على إعادة النظر في جميع برامج النشاط الحكومي القديم والجديد وتقييم التكاليف والمنافع لكل منها بداية كل سنة.", correct: "صح" },
+    { text: "تنقسم الرقابة المالية في الوحدات الحكومية إلى شقين رئيسيين هما: الرقابة قبل الصرف والرقابة بعد الصرف.", correct: "صح" },
+    { text: "يتولى الجهاز المركزي للمحاسبات شق الرقابة المالية السابقة (قبل الصرف) عن طريق فحص المستندات قبل إتمام المعاملات المالية.", correct: "خطأ" },
+    { text: "تتميز الوحدات غير الهادفة للربح بأن حقوق ملكيتها تعود لكيان اجتماعي أو حكومي ولا تنتقل هذه الملكية بالتداول بين الأفراد.", correct: "صح" },
+    { text: "تعفى الوحدات غير الهادفة للربح من الضرائب على رأس المال أو الدخل، ويتم توجيه فائضها المالي لتوزيعه كأرباح مادية على المتطوعين وأعضاء الإدارة.", correct: "خطأ" },
+    { text: "الرقابة في الوحدات الحكومية تتمثل في شقين: الرقابة المالية والضبط الداخلي.", correct: "صح" },
+    { text: "الرقابة المالية تنقسم إلى رقابة قبل الصرف ورقابة بعد الصرف.", correct: "صح" },
+    { text: "الجهاز المركزي للمحاسبات يقوم فقط بمراجعة حسابات الدولة دون التفتيش على المستندات.", correct: "خطأ" },
+    { text: "الوحدات غير الهادفة للربح هي كيانات تهدف أساسا إلى تحقيق الربح وتوزيعه على المالكين.", correct: "خطأ" },
+    { text: "من مصادر تمويل الوحدات غير الهادفة للربح التبرعات والرسوم والإعانات والهبات.", correct: "صح" },
+    { text: "الوحدات غير الهادفة للربح تخضع للضرائب على رأس المال والدخل مثل وحدات القطاع الخاص.", correct: "خطأ" },
+    { text: "في حالة تحقيق فائض في الوحدات غير الهادفة للربح، يتم توزيعه على الأعضاء كمكافآت.", correct: "خطأ" },
+    { text: "من خصائص الوحدات غير الهادفة للربح الغاية الأساسية تقديم خدمات ومنافع عامة للجميع.", correct: "صح" },
+    { text: "تتم إدارة الوحدات غير الهادفة للربح بواسطة أفراد من خارجها يتم تعيينهم عن طريق المسابقات العامة.", correct: "خطأ" },
+    { text: "تحاول إدارة الوحدات غير الهادفة للربح تحقيق التوازن بين الإيرادات والنفقات، ويتم تغطية العجز عن طريق الإعانات والهبات.", correct: "صح" }
+];
+
+    // ============================================================
+    // الجزء الثاني: أسئلة الاختيار من متعدد (حسب الحالات من )
+    // 👇👇👇 ضع كل أسئلتك هنا 👇👇👇
+    // كل سؤال له: text (نص السؤال), options (مصفوفة من 4 اختيارات), correct (الحرف الصحيح "a" أو "b" أو "c" أو "d")
+    // ============================================================
+// ============================================================
+// أسئلة الاختيار من متعدد - جميع الحالات الـ 19 (كاملة)
+// كل سؤال له 4 اختيارات كاملة غير مختصرة
+// ============================================================
+const mcQuestions = [
+    // ===================== الحالة الأولى (صفحة 5) =====================
+
+];
+
+    // ============================================================
+    // باقي الكود شغال تلقائي - متغيرش حاجة تحت دي
+    // ============================================================
+    
+    let allQuestions = [];
+
+    function buildExam() {
+        const root = document.getElementById('quizRoot');
+        root.innerHTML = '';
+        allQuestions = [];
+
+        // قسم صح وخطأ
+        const tfSection = document.createElement('div');
+        tfSection.className = 'section-card';
+        tfSection.innerHTML = '<div class="section-title">📌 الجزء الأول: أسئلة صح (✓) وخطأ (✗)</div>';
+        tfQuestions.forEach((q, idx) => {
+            const qId = `tf_${idx}`;
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-item';
+            questionDiv.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="truefalse-options">
+                    <label><input type="radio" name="${qId}" value="صح"> صح</label>
+                    <label><input type="radio" name="${qId}" value="خطأ"> خطأ</label>
+                </div>
+                <div class="feedback" id="fb_${qId}"></div>
+            `;
+            tfSection.appendChild(questionDiv);
+            allQuestions.push({ type: 'tf', id: qId, correct: q.correct, element: questionDiv });
+        });
+        root.appendChild(tfSection);
+
+        // قسم اختيار من متعدد
+        const mcSection = document.createElement('div');
+        mcSection.className = 'section-card';
+
+        mcQuestions.forEach((mc, idx) => {
+            const qId = `mc_${idx}`;
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question-item';
+            let optionsHtml = `<div class="question-text">${idx+1 + tfQuestions.length}. ${mc.text}</div><div class="mc-options">`;
+            mc.options.forEach((opt, optIdx) => {
+                const letter = String.fromCharCode(97+optIdx);
+                optionsHtml += `<label class="mc-option"><input type="radio" name="${qId}" value="${letter}"> ${opt}</label>`;
+            });
+            optionsHtml += `</div><div class="feedback" id="fb_${qId}"></div>`;
+            qDiv.innerHTML = optionsHtml;
+            mcSection.appendChild(qDiv);
+            allQuestions.push({ type: 'mc', id: qId, correct: mc.correct, element: qDiv });
+        });
+        root.appendChild(mcSection);
+    }
+
+    function getSelectedValue(name) {
+        const radios = document.querySelectorAll(`input[name="${name}"]`);
+        for (let r of radios) {
+            if (r.checked) return r.value;
+        }
+        return null;
+    }
+
+    function attachEvents() {
+        document.getElementById('checkAllBtn').onclick = () => {
+            let correctCount = 0;
+            allQuestions.forEach(q => {
+                const selected = getSelectedValue(q.id);
+                const feedbackDiv = q.element.querySelector('.feedback');
+                let isCorrect = false;
+                if (selected) {
+                    if (q.type === 'tf') isCorrect = (selected === q.correct);
+                    else isCorrect = (selected === q.correct);
+                }
+                if (isCorrect) {
+                    correctCount++;
+                    feedbackDiv.innerHTML = '✔️ إجابة صحيحة.';
+                    feedbackDiv.className = 'feedback correct';
+                } else {
+                    let correctAnswerText = '';
+                    if (q.type === 'tf') {
+                        correctAnswerText = (q.correct === 'صح' ? 'صح' : 'خطأ');
+                    } else {
+                        correctAnswerText = `الخيار الصحيح: ${q.correct.toUpperCase()}`;
+                    }
+                    feedbackDiv.innerHTML = `❌ غير صحيحة. ${correctAnswerText}`;
+                    feedbackDiv.className = 'feedback wrong';
+                }
+            });
+            document.getElementById('scoreValue').innerText = `${correctCount} / ${allQuestions.length}`;
+        };
+
+        document.getElementById('resetAllBtn').onclick = () => {
+            allQuestions.forEach(q => {
+                const radios = q.element.querySelectorAll(`input[name="${q.id}"]`);
+                radios.forEach(r => r.checked = false);
+                const fb = q.element.querySelector('.feedback');
+                fb.innerHTML = '';
+                fb.className = 'feedback';
+            });
+            document.getElementById('scoreValue').innerText = `0 / ${allQuestions.length}`;
+        };
+    }
+
+    buildExam();
+    attachEvents();
+    document.getElementById('scoreValue').innerText = `0 / ${allQuestions.length}`;
+</script>
+</body>
+</html>
